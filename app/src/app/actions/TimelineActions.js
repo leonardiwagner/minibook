@@ -5,8 +5,8 @@ class TimelineActions {
         this.dispatch(timeline);
     }
 
-    writeNewEvent(event) {
-        this.dispatch(event);
+    writeEvent(event){
+        return event;
     }
 }
 

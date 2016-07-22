@@ -1,20 +1,9 @@
 import alt from '../alt';
 
-import TimelineActions from '../Actions/TimelineActions';
+import TimelineActions from '../actions/TimelineActions';
 
 class TimelineStore {
     constructor(){
-        this.timeline = [];
-
-        this.bindListeners({
-            loadTimeline: TimelineActions.LOAD_TIMELINE,
-            handleWriteNewEvent: TimelineActions.WRITE_NEW_EVENT
-        });
-    }
-
-    loadTimeline(timeline){
-        console.log("nuthin right?", timeline);
-
         this.timeline = [
             {title: "krip"},
             {title: "ta"},
@@ -23,10 +12,21 @@ class TimelineStore {
             {title: "kch"},
             {title: "erra"}
         ];
+
+        this.bindListeners({
+            loadTimeline: TimelineActions.LOAD_TIMELINE,
+            writeEvent: TimelineActions.WRITE_EVENT
+        });
     }
 
-    handleWriteNewEvent(event){
-        console.log("shimbalae", event);
+    writeEvent(somthing){
+        this.timeline.push({title: somthing});
+    }
+
+    loadTimeline(timeline){
+        console.log("nuthin right?", timeline);
+
+
     }
 
 }

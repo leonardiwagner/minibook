@@ -61,7 +61,7 @@
 	
 	var _Timeline2 = _interopRequireDefault(_Timeline);
 	
-	var _EventWriter = __webpack_require__(/*! ./components/EventWriter.jsx */ 202);
+	var _EventWriter = __webpack_require__(/*! ./components/EventWriter.jsx */ 190);
 	
 	var _EventWriter2 = _interopRequireDefault(_EventWriter);
 	
@@ -21664,17 +21664,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _connectToStores = __webpack_require__(/*! alt-utils/lib/connectToStores */ 191);
+	
+	var _connectToStores2 = _interopRequireDefault(_connectToStores);
+	
 	var _reactDom = __webpack_require__(/*! react-dom */ 33);
 	
-	var _altContainer = __webpack_require__(/*! alt-container */ 173);
-	
-	var _altContainer2 = _interopRequireDefault(_altContainer);
-	
-	var _TimelineEvent = __webpack_require__(/*! ./TimelineEvent.jsx */ 185);
+	var _TimelineEvent = __webpack_require__(/*! ./TimelineEvent.jsx */ 173);
 	
 	var _TimelineEvent2 = _interopRequireDefault(_TimelineEvent);
 	
-	var _TimelineStore = __webpack_require__(/*! ../stores/TimelineStore */ 186);
+	var _TimelineStore = __webpack_require__(/*! ../stores/TimelineStore */ 174);
 	
 	var _TimelineStore2 = _interopRequireDefault(_TimelineStore);
 	
@@ -21698,7 +21698,7 @@
 	    _createClass(Timeline, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            _TimelineStore2.default.loadTimeline();
+	            //    TimelineStore.loadTimeline();
 	        }
 	    }, {
 	        key: 'render',
@@ -21711,854 +21711,26 @@
 	                })
 	            );
 	        }
+	    }], [{
+	        key: 'getStores',
+	        value: function getStores() {
+	            return [_TimelineStore2.default];
+	        }
+	    }, {
+	        key: 'getPropsFromStores',
+	        value: function getPropsFromStores() {
+	            return _TimelineStore2.default.getState();
+	        }
 	    }]);
 	
 	    return Timeline;
 	}(_react2.default.Component);
 	
-	exports.default = Timeline;
+	exports.default = (0, _connectToStores2.default)(Timeline);
+	//export default Timeline;
 
 /***/ },
 /* 173 */
-/*!*********************************************!*\
-  !*** ./~/alt-container/lib/AltContainer.js ***!
-  \*********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/*eslint-disable*/
-	/**
-	 * AltContainer.
-	 *
-	 * There are many ways to use AltContainer.
-	 *
-	 * Using the `stores` prop.
-	 *
-	 * <AltContainer stores={{ FooStore: FooStore }}>
-	 *   children get this.props.FooStore.storeData
-	 * </AltContainer>
-	 *
-	 * You can also pass in functions.
-	 *
-	 * <AltContainer stores={{ FooStore: function () { return { storeData: true } } }}>
-	 *   children get this.props.FooStore.storeData
-	 * </AltContainer>
-	 *
-	 * Using the `store` prop.
-	 *
-	 * <AltContainer store={FooStore}>
-	 *   children get this.props.storeData
-	 * </AltContainer>
-	 *
-	 * Passing in `flux` because you're using alt instances
-	 *
-	 * <AltContainer flux={flux}>
-	 *   children get this.props.flux
-	 * </AltContainer>
-	 *
-	 * Using a custom render function.
-	 *
-	 * <AltContainer
-	 *   render={function (props) {
-	 *     return <div />;
-	 *   }}
-	 * />
-	 *
-	 * Using the `transform` prop.
-	 *
-	 * <AltContainer
-	 *   stores={{ FooStore: FooStore, BarStore: BarStore }}
-	 *   transform={function(stores) {
-	 *     var FooStore = stores.FooStore;
-	 *     var BarStore = stores.BarStore;
-	 *     var products =
-	 *       FooStore.products
-	 *         .slice(0, 10)
-	 *         .concat(BarStore.products);
-	 *     return { products: products };
-	 *   }}
-	 * >
-	 *   children get this.props.products
-	 * </AltContainer>
-	 *
-	 * Full docs available at http://goatslacker.github.io/alt/
-	 */
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _objectAssign = __webpack_require__(/*! object.assign */ 174);
-	
-	var _objectAssign2 = _interopRequireDefault(_objectAssign);
-	
-	var id = function id(it) {
-	  return it;
-	};
-	var getStateFromStore = function getStateFromStore(store, props) {
-	  return typeof store === 'function' ? store(props).value : store.getState();
-	};
-	var getStateFromKey = function getStateFromKey(actions, props) {
-	  return typeof actions === 'function' ? actions(props) : actions;
-	};
-	
-	var getStateFromActions = function getStateFromActions(props) {
-	  if (props.actions) {
-	    return getStateFromKey(props.actions, props);
-	  } else {
-	    return {};
-	  }
-	};
-	
-	var getInjected = function getInjected(props) {
-	  if (props.inject) {
-	    return Object.keys(props.inject).reduce(function (obj, key) {
-	      obj[key] = getStateFromKey(props.inject[key], props);
-	      return obj;
-	    }, {});
-	  } else {
-	    return {};
-	  }
-	};
-	
-	var reduceState = function reduceState(props) {
-	  return (0, _objectAssign2['default'])({}, getStateFromStores(props), getStateFromActions(props), getInjected(props));
-	};
-	
-	var getStateFromStores = function getStateFromStores(props) {
-	  var stores = props.stores;
-	  if (props.store) {
-	    return getStateFromStore(props.store, props);
-	  } else if (props.stores) {
-	    // If you pass in an array of stores then we are just listening to them
-	    // it should be an object then the state is added to the key specified
-	    if (!Array.isArray(stores)) {
-	      return Object.keys(stores).reduce(function (obj, key) {
-	        obj[key] = getStateFromStore(stores[key], props);
-	        return obj;
-	      }, {});
-	    }
-	  } else {
-	    return {};
-	  }
-	};
-	
-	// TODO need to copy some other contextTypes maybe?
-	// what about propTypes?
-	
-	var AltContainer = (function (_React$Component) {
-	  _inherits(AltContainer, _React$Component);
-	
-	  _createClass(AltContainer, [{
-	    key: 'getChildContext',
-	    value: function getChildContext() {
-	      var flux = this.props.flux || this.context.flux;
-	      return flux ? { flux: flux } : {};
-	    }
-	  }], [{
-	    key: 'contextTypes',
-	    value: {
-	      flux: _react2['default'].PropTypes.object
-	    },
-	    enumerable: true
-	  }, {
-	    key: 'childContextTypes',
-	    value: {
-	      flux: _react2['default'].PropTypes.object
-	    },
-	    enumerable: true
-	  }]);
-	
-	  function AltContainer(props) {
-	    var _this = this;
-	
-	    _classCallCheck(this, AltContainer);
-	
-	    _get(Object.getPrototypeOf(AltContainer.prototype), 'constructor', this).call(this, props);
-	
-	    this.altSetState = function () {
-	      _this.setState(reduceState(_this.props));
-	    };
-	
-	    if (props.stores && props.store) {
-	      throw new ReferenceError('Cannot define both store and stores');
-	    }
-	
-	    this.storeListeners = [];
-	
-	    this.state = reduceState(props);
-	  }
-	
-	  _createClass(AltContainer, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      this._destroySubscriptions();
-	      this.setState(reduceState(nextProps));
-	      this._registerStores(nextProps);
-	      if (this.props.onWillReceiveProps) {
-	        this.props.onWillReceiveProps(nextProps, this.props, this.context);
-	      }
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this._registerStores(this.props);
-	      if (this.props.onMount) this.props.onMount(this.props, this.context);
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this._destroySubscriptions();
-	      if (this.props.onWillUnmount) {
-	        this.props.onWillUnmount(this.props, this.context);
-	      }
-	    }
-	  }, {
-	    key: '_registerStores',
-	    value: function _registerStores(props) {
-	      var _this2 = this;
-	
-	      var stores = props.stores;
-	
-	      if (props.store) {
-	        this._addSubscription(props.store);
-	      } else if (props.stores) {
-	        if (Array.isArray(stores)) {
-	          stores.forEach(function (store) {
-	            return _this2._addSubscription(store);
-	          });
-	        } else {
-	          Object.keys(stores).forEach(function (formatter) {
-	            _this2._addSubscription(stores[formatter]);
-	          });
-	        }
-	      }
-	    }
-	  }, {
-	    key: '_destroySubscriptions',
-	    value: function _destroySubscriptions() {
-	      this.storeListeners.forEach(function (storeListener) {
-	        return storeListener();
-	      });
-	    }
-	  }, {
-	    key: '_addSubscription',
-	    value: function _addSubscription(getStore) {
-	      var store = typeof getStore === 'function' ? getStore(this.props).store : getStore;
-	
-	      this.storeListeners.push(store.listen(this.altSetState));
-	    }
-	  }, {
-	    key: 'getProps',
-	    value: function getProps() {
-	      var flux = this.props.flux || this.context.flux;
-	      var transform = typeof this.props.transform === 'function' ? this.props.transform : id;
-	      return transform((0, _objectAssign2['default'])(flux ? { flux: flux } : {}, this.state));
-	    }
-	  }, {
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return this.props.shouldComponentUpdate ? this.props.shouldComponentUpdate(this.getProps(), nextProps, nextState) : true;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-	
-	      var Node = 'div';
-	      var children = this.props.children;
-	
-	      // Custom rendering function
-	      if (typeof this.props.render === 'function') {
-	        return this.props.render(this.getProps());
-	      } else if (this.props.component) {
-	        return _react2['default'].createElement(this.props.component, this.getProps());
-	      }
-	
-	      // Does not wrap child in a div if we don't have to.
-	      if (Array.isArray(children)) {
-	        return _react2['default'].createElement(Node, null, children.map(function (child, i) {
-	          return _react2['default'].cloneElement(child, (0, _objectAssign2['default'])({ key: i }, _this3.getProps()));
-	        }));
-	      } else if (children) {
-	        return _react2['default'].cloneElement(children, this.getProps());
-	      } else {
-	        return _react2['default'].createElement(Node, this.getProps());
-	      }
-	    }
-	  }]);
-	
-	  return AltContainer;
-	})(_react2['default'].Component);
-	
-	exports['default'] = AltContainer;
-	module.exports = exports['default'];
-
-/***/ },
-/* 174 */
-/*!**************************************************!*\
-  !*** ./~/alt-container/~/object.assign/index.js ***!
-  \**************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var defineProperties = __webpack_require__(/*! define-properties */ 175);
-	
-	var implementation = __webpack_require__(/*! ./implementation */ 179);
-	var getPolyfill = __webpack_require__(/*! ./polyfill */ 183);
-	var shim = __webpack_require__(/*! ./shim */ 184);
-	
-	var polyfill = getPolyfill();
-	
-	defineProperties(polyfill, {
-		implementation: implementation,
-		getPolyfill: getPolyfill,
-		shim: shim
-	});
-	
-	module.exports = polyfill;
-
-
-/***/ },
-/* 175 */
-/*!**********************************************************************!*\
-  !*** ./~/alt-container/~/object.assign/~/define-properties/index.js ***!
-  \**********************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var keys = __webpack_require__(/*! object-keys */ 176);
-	var foreach = __webpack_require__(/*! foreach */ 178);
-	var hasSymbols = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
-	
-	var toStr = Object.prototype.toString;
-	
-	var isFunction = function (fn) {
-		return typeof fn === 'function' && toStr.call(fn) === '[object Function]';
-	};
-	
-	var arePropertyDescriptorsSupported = function () {
-		var obj = {};
-		try {
-			Object.defineProperty(obj, 'x', { enumerable: false, value: obj });
-	        /* eslint-disable no-unused-vars, no-restricted-syntax */
-	        for (var _ in obj) { return false; }
-	        /* eslint-enable no-unused-vars, no-restricted-syntax */
-			return obj.x === obj;
-		} catch (e) { /* this is IE 8. */
-			return false;
-		}
-	};
-	var supportsDescriptors = Object.defineProperty && arePropertyDescriptorsSupported();
-	
-	var defineProperty = function (object, name, value, predicate) {
-		if (name in object && (!isFunction(predicate) || !predicate())) {
-			return;
-		}
-		if (supportsDescriptors) {
-			Object.defineProperty(object, name, {
-				configurable: true,
-				enumerable: false,
-				value: value,
-				writable: true
-			});
-		} else {
-			object[name] = value;
-		}
-	};
-	
-	var defineProperties = function (object, map) {
-		var predicates = arguments.length > 2 ? arguments[2] : {};
-		var props = keys(map);
-		if (hasSymbols) {
-			props = props.concat(Object.getOwnPropertySymbols(map));
-		}
-		foreach(props, function (name) {
-			defineProperty(object, name, map[name], predicates[name]);
-		});
-	};
-	
-	defineProperties.supportsDescriptors = !!supportsDescriptors;
-	
-	module.exports = defineProperties;
-
-
-/***/ },
-/* 176 */
-/*!****************************************************************!*\
-  !*** ./~/alt-container/~/object.assign/~/object-keys/index.js ***!
-  \****************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	// modified from https://github.com/es-shims/es5-shim
-	var has = Object.prototype.hasOwnProperty;
-	var toStr = Object.prototype.toString;
-	var slice = Array.prototype.slice;
-	var isArgs = __webpack_require__(/*! ./isArguments */ 177);
-	var isEnumerable = Object.prototype.propertyIsEnumerable;
-	var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
-	var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
-	var dontEnums = [
-		'toString',
-		'toLocaleString',
-		'valueOf',
-		'hasOwnProperty',
-		'isPrototypeOf',
-		'propertyIsEnumerable',
-		'constructor'
-	];
-	var equalsConstructorPrototype = function (o) {
-		var ctor = o.constructor;
-		return ctor && ctor.prototype === o;
-	};
-	var excludedKeys = {
-		$console: true,
-		$external: true,
-		$frame: true,
-		$frameElement: true,
-		$frames: true,
-		$innerHeight: true,
-		$innerWidth: true,
-		$outerHeight: true,
-		$outerWidth: true,
-		$pageXOffset: true,
-		$pageYOffset: true,
-		$parent: true,
-		$scrollLeft: true,
-		$scrollTop: true,
-		$scrollX: true,
-		$scrollY: true,
-		$self: true,
-		$webkitIndexedDB: true,
-		$webkitStorageInfo: true,
-		$window: true
-	};
-	var hasAutomationEqualityBug = (function () {
-		/* global window */
-		if (typeof window === 'undefined') { return false; }
-		for (var k in window) {
-			try {
-				if (!excludedKeys['$' + k] && has.call(window, k) && window[k] !== null && typeof window[k] === 'object') {
-					try {
-						equalsConstructorPrototype(window[k]);
-					} catch (e) {
-						return true;
-					}
-				}
-			} catch (e) {
-				return true;
-			}
-		}
-		return false;
-	}());
-	var equalsConstructorPrototypeIfNotBuggy = function (o) {
-		/* global window */
-		if (typeof window === 'undefined' || !hasAutomationEqualityBug) {
-			return equalsConstructorPrototype(o);
-		}
-		try {
-			return equalsConstructorPrototype(o);
-		} catch (e) {
-			return false;
-		}
-	};
-	
-	var keysShim = function keys(object) {
-		var isObject = object !== null && typeof object === 'object';
-		var isFunction = toStr.call(object) === '[object Function]';
-		var isArguments = isArgs(object);
-		var isString = isObject && toStr.call(object) === '[object String]';
-		var theKeys = [];
-	
-		if (!isObject && !isFunction && !isArguments) {
-			throw new TypeError('Object.keys called on a non-object');
-		}
-	
-		var skipProto = hasProtoEnumBug && isFunction;
-		if (isString && object.length > 0 && !has.call(object, 0)) {
-			for (var i = 0; i < object.length; ++i) {
-				theKeys.push(String(i));
-			}
-		}
-	
-		if (isArguments && object.length > 0) {
-			for (var j = 0; j < object.length; ++j) {
-				theKeys.push(String(j));
-			}
-		} else {
-			for (var name in object) {
-				if (!(skipProto && name === 'prototype') && has.call(object, name)) {
-					theKeys.push(String(name));
-				}
-			}
-		}
-	
-		if (hasDontEnumBug) {
-			var skipConstructor = equalsConstructorPrototypeIfNotBuggy(object);
-	
-			for (var k = 0; k < dontEnums.length; ++k) {
-				if (!(skipConstructor && dontEnums[k] === 'constructor') && has.call(object, dontEnums[k])) {
-					theKeys.push(dontEnums[k]);
-				}
-			}
-		}
-		return theKeys;
-	};
-	
-	keysShim.shim = function shimObjectKeys() {
-		if (Object.keys) {
-			var keysWorksWithArguments = (function () {
-				// Safari 5.0 bug
-				return (Object.keys(arguments) || '').length === 2;
-			}(1, 2));
-			if (!keysWorksWithArguments) {
-				var originalKeys = Object.keys;
-				Object.keys = function keys(object) {
-					if (isArgs(object)) {
-						return originalKeys(slice.call(object));
-					} else {
-						return originalKeys(object);
-					}
-				};
-			}
-		} else {
-			Object.keys = keysShim;
-		}
-		return Object.keys || keysShim;
-	};
-	
-	module.exports = keysShim;
-
-
-/***/ },
-/* 177 */
-/*!**********************************************************************!*\
-  !*** ./~/alt-container/~/object.assign/~/object-keys/isArguments.js ***!
-  \**********************************************************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	var toStr = Object.prototype.toString;
-	
-	module.exports = function isArguments(value) {
-		var str = toStr.call(value);
-		var isArgs = str === '[object Arguments]';
-		if (!isArgs) {
-			isArgs = str !== '[object Array]' &&
-				value !== null &&
-				typeof value === 'object' &&
-				typeof value.length === 'number' &&
-				value.length >= 0 &&
-				toStr.call(value.callee) === '[object Function]';
-		}
-		return isArgs;
-	};
-
-
-/***/ },
-/* 178 */
-/*!********************************************************************************!*\
-  !*** ./~/alt-container/~/object.assign/~/define-properties/~/foreach/index.js ***!
-  \********************************************************************************/
-/***/ function(module, exports) {
-
-	
-	var hasOwn = Object.prototype.hasOwnProperty;
-	var toString = Object.prototype.toString;
-	
-	module.exports = function forEach (obj, fn, ctx) {
-	    if (toString.call(fn) !== '[object Function]') {
-	        throw new TypeError('iterator must be a function');
-	    }
-	    var l = obj.length;
-	    if (l === +l) {
-	        for (var i = 0; i < l; i++) {
-	            fn.call(ctx, obj[i], i, obj);
-	        }
-	    } else {
-	        for (var k in obj) {
-	            if (hasOwn.call(obj, k)) {
-	                fn.call(ctx, obj[k], k, obj);
-	            }
-	        }
-	    }
-	};
-	
-
-
-/***/ },
-/* 179 */
-/*!***********************************************************!*\
-  !*** ./~/alt-container/~/object.assign/implementation.js ***!
-  \***********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	// modified from https://github.com/es-shims/es6-shim
-	var keys = __webpack_require__(/*! object-keys */ 176);
-	var bind = __webpack_require__(/*! function-bind */ 180);
-	var canBeObject = function (obj) {
-		return typeof obj !== 'undefined' && obj !== null;
-	};
-	var hasSymbols = __webpack_require__(/*! ./hasSymbols */ 182)();
-	var toObject = Object;
-	var push = bind.call(Function.call, Array.prototype.push);
-	var propIsEnumerable = bind.call(Function.call, Object.prototype.propertyIsEnumerable);
-	var originalGetSymbols = hasSymbols ? Object.getOwnPropertySymbols : null;
-	
-	module.exports = function assign(target, source1) {
-		if (!canBeObject(target)) { throw new TypeError('target must be an object'); }
-		var objTarget = toObject(target);
-		var s, source, i, props, syms, value, key;
-		for (s = 1; s < arguments.length; ++s) {
-			source = toObject(arguments[s]);
-			props = keys(source);
-			var getSymbols = hasSymbols && (Object.getOwnPropertySymbols || originalGetSymbols);
-			if (getSymbols) {
-				syms = getSymbols(source);
-				for (i = 0; i < syms.length; ++i) {
-					key = syms[i];
-					if (propIsEnumerable(source, key)) {
-						push(props, key);
-					}
-				}
-			}
-			for (i = 0; i < props.length; ++i) {
-				key = props[i];
-				value = source[key];
-				if (propIsEnumerable(source, key)) {
-					objTarget[key] = value;
-				}
-			}
-		}
-		return objTarget;
-	};
-
-
-/***/ },
-/* 180 */
-/*!******************************************************************!*\
-  !*** ./~/alt-container/~/object.assign/~/function-bind/index.js ***!
-  \******************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var implementation = __webpack_require__(/*! ./implementation */ 181);
-	
-	module.exports = Function.prototype.bind || implementation;
-
-
-/***/ },
-/* 181 */
-/*!***************************************************************************!*\
-  !*** ./~/alt-container/~/object.assign/~/function-bind/implementation.js ***!
-  \***************************************************************************/
-/***/ function(module, exports) {
-
-	var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
-	var slice = Array.prototype.slice;
-	var toStr = Object.prototype.toString;
-	var funcType = '[object Function]';
-	
-	module.exports = function bind(that) {
-	    var target = this;
-	    if (typeof target !== 'function' || toStr.call(target) !== funcType) {
-	        throw new TypeError(ERROR_MESSAGE + target);
-	    }
-	    var args = slice.call(arguments, 1);
-	
-	    var bound;
-	    var binder = function () {
-	        if (this instanceof bound) {
-	            var result = target.apply(
-	                this,
-	                args.concat(slice.call(arguments))
-	            );
-	            if (Object(result) === result) {
-	                return result;
-	            }
-	            return this;
-	        } else {
-	            return target.apply(
-	                that,
-	                args.concat(slice.call(arguments))
-	            );
-	        }
-	    };
-	
-	    var boundLength = Math.max(0, target.length - args.length);
-	    var boundArgs = [];
-	    for (var i = 0; i < boundLength; i++) {
-	        boundArgs.push('$' + i);
-	    }
-	
-	    bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this,arguments); }')(binder);
-	
-	    if (target.prototype) {
-	        var Empty = function Empty() {};
-	        Empty.prototype = target.prototype;
-	        bound.prototype = new Empty();
-	        Empty.prototype = null;
-	    }
-	
-	    return bound;
-	};
-
-
-/***/ },
-/* 182 */
-/*!*******************************************************!*\
-  !*** ./~/alt-container/~/object.assign/hasSymbols.js ***!
-  \*******************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var keys = __webpack_require__(/*! object-keys */ 176);
-	
-	module.exports = function hasSymbols() {
-		if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
-		if (typeof Symbol.iterator === 'symbol') { return true; }
-	
-		var obj = {};
-		var sym = Symbol('test');
-		var symObj = Object(sym);
-		if (typeof sym === 'string') { return false; }
-	
-		if (Object.prototype.toString.call(sym) !== '[object Symbol]') { return false; }
-		if (Object.prototype.toString.call(symObj) !== '[object Symbol]') { return false; }
-	
-		// temp disabled per https://github.com/ljharb/object.assign/issues/17
-		// if (sym instanceof Symbol) { return false; }
-		// temp disabled per https://github.com/WebReflection/get-own-property-symbols/issues/4
-		// if (!(symObj instanceof Symbol)) { return false; }
-	
-		var symVal = 42;
-		obj[sym] = symVal;
-		for (sym in obj) { return false; }
-		if (keys(obj).length !== 0) { return false; }
-		if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
-	
-		if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
-	
-		var syms = Object.getOwnPropertySymbols(obj);
-		if (syms.length !== 1 || syms[0] !== sym) { return false; }
-	
-		if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) { return false; }
-	
-		if (typeof Object.getOwnPropertyDescriptor === 'function') {
-			var descriptor = Object.getOwnPropertyDescriptor(obj, sym);
-			if (descriptor.value !== symVal || descriptor.enumerable !== true) { return false; }
-		}
-	
-		return true;
-	};
-
-
-/***/ },
-/* 183 */
-/*!*****************************************************!*\
-  !*** ./~/alt-container/~/object.assign/polyfill.js ***!
-  \*****************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var implementation = __webpack_require__(/*! ./implementation */ 179);
-	
-	var lacksProperEnumerationOrder = function () {
-		if (!Object.assign) {
-			return false;
-		}
-		// v8, specifically in node 4.x, has a bug with incorrect property enumeration order
-		// note: this does not detect the bug unless there's 20 characters
-		var str = 'abcdefghijklmnopqrst';
-		var letters = str.split('');
-		var map = {};
-		for (var i = 0; i < letters.length; ++i) {
-			map[letters[i]] = letters[i];
-		}
-		var obj = Object.assign({}, map);
-		var actual = '';
-		for (var k in obj) {
-			actual += k;
-		}
-		return str !== actual;
-	};
-	
-	var assignHasPendingExceptions = function () {
-		if (!Object.assign || !Object.preventExtensions) {
-			return false;
-		}
-		// Firefox 37 still has "pending exception" logic in its Object.assign implementation,
-		// which is 72% slower than our shim, and Firefox 40's native implementation.
-		var thrower = Object.preventExtensions({ 1: 2 });
-		try {
-			Object.assign(thrower, 'xy');
-		} catch (e) {
-			return thrower[1] === 'y';
-		}
-		return false;
-	};
-	
-	module.exports = function getPolyfill() {
-		if (!Object.assign) {
-			return implementation;
-		}
-		if (lacksProperEnumerationOrder()) {
-			return implementation;
-		}
-		if (assignHasPendingExceptions()) {
-			return implementation;
-		}
-		return Object.assign;
-	};
-
-
-/***/ },
-/* 184 */
-/*!*************************************************!*\
-  !*** ./~/alt-container/~/object.assign/shim.js ***!
-  \*************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var define = __webpack_require__(/*! define-properties */ 175);
-	var getPolyfill = __webpack_require__(/*! ./polyfill */ 183);
-	
-	module.exports = function shimAssign() {
-		var polyfill = getPolyfill();
-		define(
-			Object,
-			{ assign: polyfill },
-			{ assign: function () { return Object.assign !== polyfill; } }
-		);
-		return polyfill;
-	};
-
-
-/***/ },
-/* 185 */
 /*!**********************************************!*\
   !*** ./src/app/components/TimelineEvent.jsx ***!
   \**********************************************/
@@ -22612,7 +21784,7 @@
 	exports.default = TimelineEvent;
 
 /***/ },
-/* 186 */
+/* 174 */
 /*!*****************************************!*\
   !*** ./src/app/stores/TimelineStore.js ***!
   \*****************************************/
@@ -22626,11 +21798,11 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _alt = __webpack_require__(/*! ../alt */ 187);
+	var _alt = __webpack_require__(/*! ../alt */ 175);
 	
 	var _alt2 = _interopRequireDefault(_alt);
 	
-	var _TimelineActions = __webpack_require__(/*! ../Actions/TimelineActions */ 201);
+	var _TimelineActions = __webpack_require__(/*! ../actions/TimelineActions */ 193);
 	
 	var _TimelineActions2 = _interopRequireDefault(_TimelineActions);
 	
@@ -22642,25 +21814,23 @@
 	    function TimelineStore() {
 	        _classCallCheck(this, TimelineStore);
 	
-	        this.timeline = [];
+	        this.timeline = [{ title: "krip" }, { title: "ta" }, { title: "s" }, { title: "lc" }, { title: "kch" }, { title: "erra" }];
 	
 	        this.bindListeners({
 	            loadTimeline: _TimelineActions2.default.LOAD_TIMELINE,
-	            handleWriteNewEvent: _TimelineActions2.default.WRITE_NEW_EVENT
+	            writeEvent: _TimelineActions2.default.WRITE_EVENT
 	        });
 	    }
 	
 	    _createClass(TimelineStore, [{
+	        key: 'writeEvent',
+	        value: function writeEvent(somthing) {
+	            this.timeline.push({ title: somthing });
+	        }
+	    }, {
 	        key: 'loadTimeline',
 	        value: function loadTimeline(timeline) {
 	            console.log("nuthin right?", timeline);
-	
-	            this.timeline = [{ title: "krip" }, { title: "ta" }, { title: "s" }, { title: "lc" }, { title: "kch" }, { title: "erra" }];
-	        }
-	    }, {
-	        key: 'handleWriteNewEvent',
-	        value: function handleWriteNewEvent(event) {
-	            console.log("shimbalae", event);
 	        }
 	    }]);
 	
@@ -22670,7 +21840,7 @@
 	exports.default = _alt2.default.createStore(TimelineStore, 'TimelineStore');
 
 /***/ },
-/* 187 */
+/* 175 */
 /*!************************!*\
   !*** ./src/app/alt.js ***!
   \************************/
@@ -22678,7 +21848,7 @@
 
 	'use strict';
 	
-	var Alt = __webpack_require__(/*! alt */ 188);
+	var Alt = __webpack_require__(/*! alt */ 176);
 	var alt = new Alt();
 	//var chromeDebug = require('alt/utils/chromeDebug')
 	
@@ -22687,7 +21857,7 @@
 	module.exports = alt;
 
 /***/ },
-/* 188 */
+/* 176 */
 /*!****************************!*\
   !*** ./~/alt/lib/index.js ***!
   \****************************/
@@ -22699,25 +21869,25 @@
 	  value: true
 	});
 	
-	var _flux = __webpack_require__(/*! flux */ 189);
+	var _flux = __webpack_require__(/*! flux */ 177);
 	
-	var _StateFunctions = __webpack_require__(/*! ./utils/StateFunctions */ 192);
+	var _StateFunctions = __webpack_require__(/*! ./utils/StateFunctions */ 180);
 	
 	var StateFunctions = _interopRequireWildcard(_StateFunctions);
 	
-	var _functions = __webpack_require__(/*! ./functions */ 193);
+	var _functions = __webpack_require__(/*! ./functions */ 181);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
-	var _store = __webpack_require__(/*! ./store */ 194);
+	var _store = __webpack_require__(/*! ./store */ 182);
 	
 	var store = _interopRequireWildcard(_store);
 	
-	var _AltUtils = __webpack_require__(/*! ./utils/AltUtils */ 195);
+	var _AltUtils = __webpack_require__(/*! ./utils/AltUtils */ 183);
 	
 	var utils = _interopRequireWildcard(_AltUtils);
 	
-	var _actions = __webpack_require__(/*! ./actions */ 199);
+	var _actions = __webpack_require__(/*! ./actions */ 187);
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
@@ -23072,7 +22242,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 189 */
+/* 177 */
 /*!*******************************!*\
   !*** ./~/alt/~/flux/index.js ***!
   \*******************************/
@@ -23087,11 +22257,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(/*! ./lib/Dispatcher */ 190);
+	module.exports.Dispatcher = __webpack_require__(/*! ./lib/Dispatcher */ 178);
 
 
 /***/ },
-/* 190 */
+/* 178 */
 /*!****************************************!*\
   !*** ./~/alt/~/flux/lib/Dispatcher.js ***!
   \****************************************/
@@ -23116,7 +22286,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 191);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 179);
 	
 	var _prefix = 'ID_';
 	
@@ -23331,7 +22501,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 191 */
+/* 179 */
 /*!**********************************************!*\
   !*** ./~/alt/~/flux/~/fbjs/lib/invariant.js ***!
   \**********************************************/
@@ -23389,7 +22559,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 192 */
+/* 180 */
 /*!*******************************************!*\
   !*** ./~/alt/lib/utils/StateFunctions.js ***!
   \*******************************************/
@@ -23405,7 +22575,7 @@
 	exports.saveInitialSnapshot = saveInitialSnapshot;
 	exports.filterSnapshots = filterSnapshots;
 	
-	var _functions = __webpack_require__(/*! ../functions */ 193);
+	var _functions = __webpack_require__(/*! ../functions */ 181);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
@@ -23469,7 +22639,7 @@
 	}
 
 /***/ },
-/* 193 */
+/* 181 */
 /*!********************************!*\
   !*** ./~/alt/lib/functions.js ***!
   \********************************/
@@ -23513,7 +22683,7 @@
 	}
 
 /***/ },
-/* 194 */
+/* 182 */
 /*!**********************************!*\
   !*** ./~/alt/lib/store/index.js ***!
   \**********************************/
@@ -23529,19 +22699,19 @@
 	exports.createStoreFromObject = createStoreFromObject;
 	exports.createStoreFromClass = createStoreFromClass;
 	
-	var _AltUtils = __webpack_require__(/*! ../utils/AltUtils */ 195);
+	var _AltUtils = __webpack_require__(/*! ../utils/AltUtils */ 183);
 	
 	var utils = _interopRequireWildcard(_AltUtils);
 	
-	var _functions = __webpack_require__(/*! ../functions */ 193);
+	var _functions = __webpack_require__(/*! ../functions */ 181);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
-	var _AltStore = __webpack_require__(/*! ./AltStore */ 196);
+	var _AltStore = __webpack_require__(/*! ./AltStore */ 184);
 	
 	var _AltStore2 = _interopRequireDefault(_AltStore);
 	
-	var _StoreMixin = __webpack_require__(/*! ./StoreMixin */ 198);
+	var _StoreMixin = __webpack_require__(/*! ./StoreMixin */ 186);
 	
 	var _StoreMixin2 = _interopRequireDefault(_StoreMixin);
 	
@@ -23733,7 +22903,7 @@
 	}
 
 /***/ },
-/* 195 */
+/* 183 */
 /*!*************************************!*\
   !*** ./~/alt/lib/utils/AltUtils.js ***!
   \*************************************/
@@ -23755,7 +22925,7 @@
 	exports.fsa = fsa;
 	exports.dispatch = dispatch;
 	
-	var _functions = __webpack_require__(/*! ../functions */ 193);
+	var _functions = __webpack_require__(/*! ../functions */ 181);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
@@ -23857,7 +23027,7 @@
 	function NoopClass() {}
 
 /***/ },
-/* 196 */
+/* 184 */
 /*!*************************************!*\
   !*** ./~/alt/lib/store/AltStore.js ***!
   \*************************************/
@@ -23869,11 +23039,11 @@
 	  value: true
 	});
 	
-	var _functions = __webpack_require__(/*! ../functions */ 193);
+	var _functions = __webpack_require__(/*! ../functions */ 181);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
-	var _transmitter = __webpack_require__(/*! transmitter */ 197);
+	var _transmitter = __webpack_require__(/*! transmitter */ 185);
 	
 	var _transmitter2 = _interopRequireDefault(_transmitter);
 	
@@ -24027,7 +23197,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 197 */
+/* 185 */
 /*!*************************************************!*\
   !*** ./~/alt/~/transmitter/dist/transmitter.js ***!
   \*************************************************/
@@ -24087,7 +23257,7 @@
 	module.exports = transmitter;
 
 /***/ },
-/* 198 */
+/* 186 */
 /*!***************************************!*\
   !*** ./~/alt/lib/store/StoreMixin.js ***!
   \***************************************/
@@ -24099,11 +23269,11 @@
 	  value: true
 	});
 	
-	var _transmitter = __webpack_require__(/*! transmitter */ 197);
+	var _transmitter = __webpack_require__(/*! transmitter */ 185);
 	
 	var _transmitter2 = _interopRequireDefault(_transmitter);
 	
-	var _functions = __webpack_require__(/*! ../functions */ 193);
+	var _functions = __webpack_require__(/*! ../functions */ 181);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
@@ -24332,7 +23502,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 199 */
+/* 187 */
 /*!************************************!*\
   !*** ./~/alt/lib/actions/index.js ***!
   \************************************/
@@ -24345,15 +23515,15 @@
 	});
 	exports['default'] = makeAction;
 	
-	var _functions = __webpack_require__(/*! ../functions */ 193);
+	var _functions = __webpack_require__(/*! ../functions */ 181);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
-	var _AltUtils = __webpack_require__(/*! ../utils/AltUtils */ 195);
+	var _AltUtils = __webpack_require__(/*! ../utils/AltUtils */ 183);
 	
 	var utils = _interopRequireWildcard(_AltUtils);
 	
-	var _isPromise = __webpack_require__(/*! is-promise */ 200);
+	var _isPromise = __webpack_require__(/*! is-promise */ 188);
 	
 	var _isPromise2 = _interopRequireDefault(_isPromise);
 	
@@ -24422,7 +23592,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 200 */
+/* 188 */
 /*!*************************************!*\
   !*** ./~/alt/~/is-promise/index.js ***!
   \*************************************/
@@ -24436,52 +23606,8 @@
 
 
 /***/ },
-/* 201 */
-/*!********************************************!*\
-  !*** ./src/app/Actions/TimelineActions.js ***!
-  \********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _alt = __webpack_require__(/*! ../alt */ 187);
-	
-	var _alt2 = _interopRequireDefault(_alt);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var TimelineActions = function () {
-	    function TimelineActions() {
-	        _classCallCheck(this, TimelineActions);
-	    }
-	
-	    _createClass(TimelineActions, [{
-	        key: 'loadTimeline',
-	        value: function loadTimeline(timeline) {
-	            this.dispatch(timeline);
-	        }
-	    }, {
-	        key: 'writeNewEvent',
-	        value: function writeNewEvent(event) {
-	            this.dispatch(event);
-	        }
-	    }]);
-	
-	    return TimelineActions;
-	}();
-	
-	exports.default = _alt2.default.createActions(TimelineActions);
-
-/***/ },
-/* 202 */
+/* 189 */,
+/* 190 */
 /*!********************************************!*\
   !*** ./src/app/components/EventWriter.jsx ***!
   \********************************************/
@@ -24501,9 +23627,13 @@
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 33);
 	
-	var _TimelineStore = __webpack_require__(/*! ../stores/TimelineStore */ 186);
+	var _TimelineStore = __webpack_require__(/*! ../stores/TimelineStore */ 174);
 	
 	var _TimelineStore2 = _interopRequireDefault(_TimelineStore);
+	
+	var _TimelineActions = __webpack_require__(/*! ../actions/TimelineActions */ 193);
+	
+	var _TimelineActions2 = _interopRequireDefault(_TimelineActions);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24525,17 +23655,21 @@
 	    _createClass(EventWriter, [{
 	        key: 'onSaveEvent',
 	        value: function onSaveEvent() {
-	            _TimelineStore2.default.handleWriteNewEvent();
+	            _TimelineActions2.default.writeEvent("vai sim ó");
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'form',
+	                'div',
 	                null,
 	                'title ',
 	                _react2.default.createElement('input', { type: 'text' }),
-	                _react2.default.createElement('button', { onClick: this.onSaveEvent })
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.onSaveEvent },
+	                    'Send dis'
+	                )
 	            );
 	        }
 	    }]);
@@ -24544,6 +23678,227 @@
 	}(_react2.default.Component);
 	
 	exports.default = EventWriter;
+
+/***/ },
+/* 191 */
+/*!********************************************!*\
+  !*** ./~/alt-utils/lib/connectToStores.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * 'Higher Order Component' that controls the props of a wrapped
+	 * component via stores.
+	 *
+	 * Expects the Component to have two static methods:
+	 *   - getStores(): Should return an array of stores.
+	 *   - getPropsFromStores(props): Should return the props from the stores.
+	 *
+	 * Example using old React.createClass() style:
+	 *
+	 *    const MyComponent = React.createClass({
+	 *      statics: {
+	 *        getStores(props) {
+	 *          return [myStore]
+	 *        },
+	 *        getPropsFromStores(props) {
+	 *          return myStore.getState()
+	 *        }
+	 *      },
+	 *      render() {
+	 *        // Use this.props like normal ...
+	 *      }
+	 *    })
+	 *    MyComponent = connectToStores(MyComponent)
+	 *
+	 *
+	 * Example using ES6 Class:
+	 *
+	 *    class MyComponent extends React.Component {
+	 *      static getStores(props) {
+	 *        return [myStore]
+	 *      }
+	 *      static getPropsFromStores(props) {
+	 *        return myStore.getState()
+	 *      }
+	 *      render() {
+	 *        // Use this.props like normal ...
+	 *      }
+	 *    }
+	 *    MyComponent = connectToStores(MyComponent)
+	 *
+	 * A great explanation of the merits of higher order components can be found at
+	 * http://bit.ly/1abPkrP
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _functions = __webpack_require__(/*! ./functions */ 192);
+	
+	function connectToStores(Spec) {
+	  var Component = arguments.length <= 1 || arguments[1] === undefined ? Spec : arguments[1];
+	  return (function () {
+	    // Check for required static methods.
+	    if (!(0, _functions.isFunction)(Spec.getStores)) {
+	      throw new Error('connectToStores() expects the wrapped component to have a static getStores() method');
+	    }
+	    if (!(0, _functions.isFunction)(Spec.getPropsFromStores)) {
+	      throw new Error('connectToStores() expects the wrapped component to have a static getPropsFromStores() method');
+	    }
+	
+	    var StoreConnection = _react2['default'].createClass({
+	      displayName: 'Stateful' + (Component.displayName || Component.name || 'Container'),
+	
+	      getInitialState: function getInitialState() {
+	        return Spec.getPropsFromStores(this.props, this.context);
+	      },
+	
+	      componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        this.setState(Spec.getPropsFromStores(nextProps, this.context));
+	      },
+	
+	      componentDidMount: function componentDidMount() {
+	        var _this = this;
+	
+	        var stores = Spec.getStores(this.props, this.context);
+	        this.storeListeners = stores.map(function (store) {
+	          return store.listen(_this.onChange);
+	        });
+	        if (Spec.componentDidConnect) {
+	          Spec.componentDidConnect(this.props, this.context);
+	        }
+	      },
+	
+	      componentWillUnmount: function componentWillUnmount() {
+	        this.storeListeners.forEach(function (unlisten) {
+	          return unlisten();
+	        });
+	      },
+	
+	      onChange: function onChange() {
+	        this.setState(Spec.getPropsFromStores(this.props, this.context));
+	      },
+	
+	      render: function render() {
+	        return _react2['default'].createElement(Component, (0, _functions.assign)({}, this.props, this.state));
+	      }
+	    });
+	    if (Component.contextTypes) {
+	      StoreConnection.contextTypes = Component.contextTypes;
+	    }
+	
+	    return StoreConnection;
+	  })();
+	}
+	
+	exports['default'] = connectToStores;
+	module.exports = exports['default'];
+
+/***/ },
+/* 192 */
+/*!**************************************!*\
+  !*** ./~/alt-utils/lib/functions.js ***!
+  \**************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.isPojo = isPojo;
+	exports.isPromise = isPromise;
+	exports.eachObject = eachObject;
+	exports.assign = assign;
+	var isFunction = function isFunction(x) {
+	  return typeof x === 'function';
+	};
+	
+	exports.isFunction = isFunction;
+	
+	function isPojo(target) {
+	  var Ctor = target.constructor;
+	
+	  return !!target && typeof target === 'object' && Object.prototype.toString.call(target) === '[object Object]' && isFunction(Ctor) && (Ctor instanceof Ctor || target.type === 'AltStore');
+	}
+	
+	function isPromise(obj) {
+	  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
+	}
+	
+	function eachObject(f, o) {
+	  o.forEach(function (from) {
+	    Object.keys(Object(from)).forEach(function (key) {
+	      f(key, from[key]);
+	    });
+	  });
+	}
+	
+	function assign(target) {
+	  for (var _len = arguments.length, source = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	    source[_key - 1] = arguments[_key];
+	  }
+	
+	  eachObject(function (key, value) {
+	    return target[key] = value;
+	  }, source);
+	  return target;
+	}
+
+/***/ },
+/* 193 */
+/*!********************************************!*\
+  !*** ./src/app/actions/TimelineActions.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _alt = __webpack_require__(/*! ../alt */ 175);
+	
+	var _alt2 = _interopRequireDefault(_alt);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var TimelineActions = function () {
+	    function TimelineActions() {
+	        _classCallCheck(this, TimelineActions);
+	    }
+	
+	    _createClass(TimelineActions, [{
+	        key: 'loadTimeline',
+	        value: function loadTimeline(timeline) {
+	            this.dispatch(timeline);
+	        }
+	    }, {
+	        key: 'writeEvent',
+	        value: function writeEvent(event) {
+	            return event;
+	        }
+	    }]);
+	
+	    return TimelineActions;
+	}();
+	
+	exports.default = _alt2.default.createActions(TimelineActions);
 
 /***/ }
 /******/ ]);
