@@ -10,8 +10,11 @@ class EventWriter extends React.Component {
     }
     render() {
         return <div>
-            title <input type="text" />
-            <button onClick={this.onSaveEvent} >Send dis</button>
+            <img src='http://i.imgur.com/H357yaH.jpg' width='50' height='50' />
+            <label>What's the deuce?
+                <textarea id="txtMessage" />
+            </label>
+            <button onClick={this.onSaveEvent} >Post</button>
         </div>
     }
 }
