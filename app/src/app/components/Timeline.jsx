@@ -1,10 +1,11 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
 import {render} from 'react-dom';
+import connectToStores from 'alt-utils/lib/connectToStores';
 
 
 import TimelineEvent from './TimelineEvent.jsx';
 
+import TimelineActions from '../actions/TimelineActions';
 import TimelineStore from '../stores/TimelineStore'
 
 class Timeline extends React.Component {
@@ -21,7 +22,9 @@ class Timeline extends React.Component {
     }
 
     componentDidMount() {
-    //    TimelineStore.loadTimeline();
+        setTimeout(function(){
+            TimelineActions.loadTimeline();
+        },500);
     }
 
     render(){

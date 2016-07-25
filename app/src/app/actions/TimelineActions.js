@@ -1,8 +1,8 @@
 import alt from '../alt';
 
 class TimelineActions {
-    loadTimeline(timeline) {
-        this.dispatch(timeline);
+    loadTimeline() {
+        return 'wat';
     }
 
     writeEvent(event){

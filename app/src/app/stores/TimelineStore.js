@@ -4,14 +4,7 @@ import TimelineActions from '../actions/TimelineActions';
 
 class TimelineStore {
     constructor(){
-        this.timeline = [
-            {title: "krip"},
-            {title: "ta"},
-            {title: "s"},
-            {title: "lc"},
-            {title: "kch"},
-            {title: "erra"}
-        ];
+        this.timeline = [];
 
         this.bindListeners({
             loadTimeline: TimelineActions.LOAD_TIMELINE,
@@ -19,14 +12,17 @@ class TimelineStore {
         });
     }
 
-    writeEvent(somthing){
-        this.timeline.push({title: somthing});
+    writeEvent(something){
+        this.timeline.push({title: something})
+
     }
 
     loadTimeline(timeline){
-        console.log("nuthin right?", timeline);
-
-
+       this.timeline = [
+            {title: "erra"},
+            {title: "ta"},
+            {title: "krip"}
+        ];
     }
 
 }
