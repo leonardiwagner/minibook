@@ -3,10 +3,11 @@ const initialState = {
 }
 
 export function minibookApp(state = initialState, action) {
+    console.log("reducer", state.events)
     if(action.type === 'ADD_EVENT'){
-        const newEvents = state.map(x => x);
+        const newEvents = state.events.map(x => x);
         newEvents.push(action.text);
-        return newEvents;
+        return { events: newEvents };
     }
 
     return state;

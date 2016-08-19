@@ -1,14 +1,18 @@
 import React, { PropTypes } from 'react';
 import {render} from 'react-dom';
+import TimelineEvent from './TimelineEvent.jsx'
 
-const Timeline = ({ timeline }) => (
+const Timeline = ({ events }) => {
+
+    return (
     <div>
-        { timeline.map(event => <TimelineEvent key={event.title} event={event}  />) }
+        { events.map(event => <TimelineEvent key={event} event={event}  />) }
     </div>
-)
+    )
+}
 
 Timeline.propTypes = {
-    timeline: PropTypes.array.isRequired
+    events: PropTypes.array.isRequired
 }
 
 export default Timeline;

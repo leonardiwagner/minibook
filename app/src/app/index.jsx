@@ -1,18 +1,15 @@
-import React from 'react';
-import {render} from 'react-dom';
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import {minibookApp} from './reducer/reducer'
+import App from './components/App'
 
-import Header from './components/Header.jsx';
-import Timeline from './components/Timeline.jsx';
-import EventWriter from './components/EventWriter.jsx';
+let store = createStore(minibookApp)
 
-class App extends React.Component {
-    render(){
-        return <div>
-            <Header />
-            <EventWriter />
-            <Timeline />
-        </div>
-    }
-}
-
-render(<App/>, document.getElementById('app'));
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+)

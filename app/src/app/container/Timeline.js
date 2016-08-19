@@ -2,13 +2,10 @@ import { connect } from 'react-redux'
 import { loadEvents } from '../actions/actions'
 import TimelineComponent from '../components/Timeline.jsx'
 
-const getTimelineEvents = (events) => {
-    return events;
-}
 
 const mapStateToProps = (state) => {
     return {
-        events: getTimelineEvents(state.events)
+        events: state.events
     }
 }
 
@@ -21,8 +18,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const Timeline = connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps//,
+    //mapDispatchToProps
 )(TimelineComponent)
 
 export default Timeline

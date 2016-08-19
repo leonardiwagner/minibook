@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { addEvent } from '../actions/actions'
 import {render} from 'react-dom';
 
 class EventWriter extends React.Component {
@@ -8,16 +10,8 @@ class EventWriter extends React.Component {
             value: ''
         };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.onSaveEvent = this.onSaveEvent.bind(this);
-    }
-
-    onSaveEvent(){
-        //TimelineActions.writeEvent(this.state.value);
-    }
-
-    handleChange(event) {
-        this.setState({value: event.target.value});
+        this.onSaveEvent = this.onSaveEvent.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
     render() {
@@ -29,6 +23,18 @@ class EventWriter extends React.Component {
             <button onClick={this.onSaveEvent} >Post</button>
         </div>
     }
+
+    onSaveEvent() {
+        this.props.dispatch(addEvent(this.state.value))
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+
 }
+
+EventWriter = connect()(EventWriter)
 
 export default EventWriter;
