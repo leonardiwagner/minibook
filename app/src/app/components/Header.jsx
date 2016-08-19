@@ -1,20 +1,9 @@
 import React from 'react';
 import {render} from 'react-dom';
-import connectToStores from 'alt-utils/lib/connectToStores';
-
-import UserStore from '../stores/UserStore';
 
 class Header extends React.Component {
   constructor(props){
     super(props);
-  }
-
-  static getStores() {
-    return [ UserStore ];
-  }
-
-  static getPropsFromStores() {
-    return UserStore.getState();
   }
 
   render(){
@@ -24,12 +13,12 @@ class Header extends React.Component {
             <h1>minibook</h1>
           </div>
           <div className='navbar-text navbar-right'>
-            <img src={this.props.user.img} width='50' height='50' />
-            {this.props.user.name}
+            <img src={this.props.user && this.props.user.img} width='50' height='50' />
+            {this.props.user && this.props.user.name}
           </div>
         </div>
       </nav>;
   }
 }
 
-export default connectToStores(Header);
+export default Header;
